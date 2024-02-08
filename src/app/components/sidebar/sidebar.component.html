@@ -1,0 +1,21 @@
+<section class="sidebar">
+    <div class="sidebar-logo-con flex justify-center mb-6">
+        <img src="./../../../assets/img/primary_logo.svg" alt="Logo Black">
+    </div>
+    <div class="sidebar-item flex items-center flex-col justify-center w-full cursor-pointer hover:text-primary text-white" *ngFor="let item of sidebarItems"
+    [ngClass]="{'currentUrl': this.router.url == '/'+item.route || this.router.url.includes(item.label)}" (click)="redirectTo(item)">
+        <div class="w-3/4 flex items-center">
+            <img class="m-4 item-icon h-5" [src]="item.icon" [alt]="item.label">
+            <span >{{item.label}}</span>
+            <img *ngIf="item.children?.length! > 0" (click)="item.collapse = !item.collapse" class="ml-auto" src="./../../../assets/icons/chevron_down.svg" alt="chevron down icon">
+        </div>
+        <div *ngIf="item.children?.length! > 0" class="sidebar-accordian-con" [ngClass]="{'active': item.collapse}">
+            <div *ngFor="let grandItem of item.children" class="sidebar-item-child flex items-center justify-center w-full cursor-pointer hover:text-dark text-gray" (click)="redirectTo(grandItem)">
+                <div class="w-3/4 flex items-center">
+                    <img class="m-4 grand-item-icon" [src]="grandItem.icon" [alt]="grandItem.label">
+                    <span class="leading-5">{{grandItem.label}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

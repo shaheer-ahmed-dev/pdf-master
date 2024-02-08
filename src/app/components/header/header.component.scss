@@ -1,0 +1,39 @@
+@import './../../utils/resources/template.scss';
+
+.main-header-con{
+    height: 75px;
+    background-color: $primary-dark;
+    padding: 0 40px 0px 20px;
+    .header-notification-icon{
+        margin-right: 20px;
+        position: relative;
+    }
+    .header-action-button{
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        .avatar-con{
+            width: 40px;
+            height: 40px;
+        }
+    }
+    .header-popup-menu{
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 200px;
+        background-color: $white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+        padding: 10px 0;
+        .header-popup-menu-item{
+            padding: 10px 20px;
+            cursor: pointer;
+            &:hover{
+                background-color: $md-shade;
+            }
+        }
+    }
+}

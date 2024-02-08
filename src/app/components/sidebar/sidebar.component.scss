@@ -1,0 +1,60 @@
+@import './../../utils/resources/template.scss';
+
+.sidebar{
+    width: 220px;
+    height: 100%;
+    min-height: 100vh;
+    background-color: $primary-dark;
+    .sidebar-logo-con{
+        padding: 30px 20px 30px;
+        img{
+            height: 100%;
+            width: 85%;
+            cursor: pointer;
+        }
+    }
+    .sidebar-item {
+        padding-bottom: 20px;
+        &:hover, &.currentUrl{
+            img.item-icon{
+                filter: drop-shadow(0px 1000px 0 $primary);
+                transform: translateY(-1000px);
+            }
+        }
+        &.currentUrl{
+            color: $primary;
+            position: relative;
+            &::after{
+                content: '';
+                right: -4px;
+                background: $primary;
+                top: 0px;
+                width: 4px;
+                height: 80%;
+                position: absolute;
+                border-radius: 8px;
+            }
+        }
+        .first-letter-highlight{
+            &::first-letter{
+                color: $red;
+            }
+        }
+        .sidebar-item-child{
+            &:hover{
+                img.grand-item-icon{
+                    filter: drop-shadow(0px 1000px 0 $primary);
+                    transform: translateY(-1000px);
+                }
+            }
+        }
+        .sidebar-accordian-con{
+            transition: 400ms ease-in-out;
+            overflow: auto;
+            max-height: 0px;
+            &.active {
+                max-height: 250px;
+            }
+        }
+    }
+} 

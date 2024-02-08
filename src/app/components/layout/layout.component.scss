@@ -1,0 +1,13 @@
+@import './../../utils/resources/template.scss';
+
+.main {
+    background-color: $background;
+    padding-left: 2px;
+
+    .main-page-content {
+        height: 100%;
+        display: block;
+        margin: 30px 30px 0px 30px;
+        padding-bottom: 50px;
+    }
+}
