@@ -1,7 +1,137 @@
+@import '/src/app/utils/resources/template.scss';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@font-face {
+  font-family: "Maven Pro";
+  src: url("./assets/fonts/MavenPro-Regular.ttf");
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("./assets/fonts/MavenPro-Regular.ttf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "Sora";
+  src: url("./assets/fonts/MavenPro-SemiBold.ttf");
+  font-weight: 600;
+}
+
+* {
+  font-family: "Sora";
+}
+
+a,
+a:hover,
+a:active {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+a:not([href]):not([tabindex]) {
+  color: inherit;
+  cursor: pointer;
+}
+
+.splashContainer {
+  background-color: $dark;
+  // background-image: url("./assets/img/background.jpg");
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 400px;
+  }
+}
+
+html,
+body {
+  height: 100%;
+  overflow-y: auto;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  font-family: "Sora";
+  color: $dark;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: $dark;
+}
+
+input {
+  width: 100%;
+  color: $dark;
+}
+
+.primary-button {
+  width: 40%;
+  background-color: $primary;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 5px 0px;
+  @include media($breakpoint-md) {
+    width: 60%;
+    
+  }
+  cursor: pointer;
+
+  &:focus {
+    outline: 2px solid $primary-100;
+  }
+}
+
+
+* {
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+}
+
+.text-xxs {
+  font-size: 0.625rem;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  /* Set the width of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  
+  /* Set the color of the thumb */
+  border-radius: 6px;
+  /* Round the corners of the thumb */
+  border: 3px solid transparent;
+  /* Add a border around the thumb */
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  /* Set the color of the track */
+  border-radius: 6px;
+  /* Round the corners of the track */
+}
+
+/* Optional: Handle on hover effect for the thumb */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a0a0a0;
+}

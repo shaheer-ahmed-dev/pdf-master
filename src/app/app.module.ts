@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BrowserModule,
    
     BrowserAnimationsModule,
-    ReactiveFormsModule,
+   
     AppRoutingModule,
   ],
   providers: [],

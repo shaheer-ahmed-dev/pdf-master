@@ -13,6 +13,7 @@ import { Profile } from './domain/interface/profile-model';
   providedIn: 'root'
 })
 export class SupabaseService {
+
   private supabase: SupabaseClient
   _session: AuthSession | null = null
 
@@ -21,7 +22,7 @@ export class SupabaseService {
   }
 
   get session() {
-    this.supabase.auth.getSession().then(({ data }) => {
+    this.supabase.auth.getSession().then(({ data  }) => {
       this._session = data.session
     })
     return this._session
@@ -42,6 +43,22 @@ export class SupabaseService {
   signIn(email: string) {
     return this.supabase.auth.signInWithOtp({ email })
   }
+
+  //this is for login
+  signInWithPass(email: string, password: string) {
+    return this.supabase.auth.signInWithPassword({ email, password })
+  }
+//this is for registration
+  signUp(email: string, password: string) {
+    return this.supabase.auth.signUp({ email, password })
+  }
+  forgotPassword(email: string) {
+    return this.supabase.auth.resetPasswordForEmail(email) ; 
+  }
+  resetPassword(token: string, password: string, confirmPassword: string) {
+    throw new Error('Method not implemented.');
+  }
+  
 
   signOut() {
     return this.supabase.auth.signOut()

@@ -7,6 +7,7 @@ import { ChangePasswordComponent } from "./change-password/change-password.compo
 import { NgModule } from "@angular/core";
 import { SignupComponent } from "./signup/signup.component";
 import { ReactiveFormsModule } from "@angular/forms";
+import { TextfieldComponent } from "../utils/widgets/textfield/textfield.component";
 
 @NgModule({
     declarations: [
@@ -15,14 +16,12 @@ import { ReactiveFormsModule } from "@angular/forms";
         ForgotPasswordComponent,
         OtpVerificationComponent,
         ChangePasswordComponent,
-        
-
     ],
     imports: [
         CommonModule,
         AuthRoutingModule,
         ReactiveFormsModule,
-        // NgOtpInputModule,
+        TextfieldComponent
     ]
 })
 export class AuthModule { }

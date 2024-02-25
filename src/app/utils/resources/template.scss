@@ -24,7 +24,7 @@ $blue: #429FFD;
 
 // BreakPoints
 $breakpoint-sm: 640px; //mobile
-$breakpoint-md: 768px; //tablet
+$breakpoint-md: 810px; //tablet
 $breakpoint-lg: 1024px; //laptop
 $breakpoint-xl: 1280px; //desktop
 $breakpoint-2xl: 1536px; //desktop
@@ -57,7 +57,7 @@ $breakpoint-2xl: 1536px; //desktop
 }
 
 @mixin media($breakpoint) {
-    @media (min-width: $breakpoint) {
+    @media (max-width: $breakpoint) {
         @content;
     }
 }

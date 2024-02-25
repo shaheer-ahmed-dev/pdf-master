@@ -1,0 +1,85 @@
+@import './../../utils/resources/template.scss';
+
+.login-main-con {
+    display: flex;
+    display: -webkit-flex;
+    height: 100vh;
+    width: 100%;
+    position: relative;
+    background-color: $dark;
+
+    .main-content {
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        position: relative;
+        margin-top: auto;
+        margin-bottom: auto;
+        @include flex;
+
+        .side-con {
+            width: 60%;
+            height: 100%;
+
+            @include media($breakpoint-md) {
+                display: none;
+
+            }
+
+            @include flex;
+            background-color: $dark;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                background-image: url('./../../../assets/img/login_background.png');
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+            }
+        }
+
+        .content-con {
+            width: 40%;
+
+            @include media($breakpoint-md) {
+                width: auto;
+
+            }
+
+            @include flex($direction: column, $justify: center, $align: center);
+
+            .form-container {
+                width: 70%;
+                min-width: 300px;
+                max-width: 500px;
+                @include flex($direction: column, $justify: center, $align: center);
+            }
+
+            .main-heading {
+                @include flex;
+                margin-top: 80px;
+            }
+
+            a {
+                display: block;
+                color: $primary;
+
+                &:hover,
+                &:active {
+                    color: $primary;
+                }
+            }
+
+            button {
+                margin-top: 10px;
+            }
+        }
+
+        app-textfield {
+            width: 100%;
+        }
+    }
+}

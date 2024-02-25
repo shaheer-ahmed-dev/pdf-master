@@ -1,0 +1,39 @@
+@import './../../resources/template.scss';
+
+.input-container{
+    width: 100%;
+    margin-bottom: 20px;
+    position: relative;
+    
+    .icon{
+        position: absolute;
+        top: 16px;
+        left: 16px;
+        width: 16px;
+      
+        height: 21px;
+    }
+    .suffix{
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        width: 16px;
+        height: 21px;
+    }
+    :host {
+        background-color: var(--background-color, $gray-50);
+      }
+    input{
+        border: none;
+        font-size: 16px;
+        outline: none;
+        border-radius: 10px;
+        padding: 15px 15px;
+        padding-left: 45px;
+        box-shadow: none;
+        &::placeholder{
+            color: $gray;
+        }
+        
+    }
+}

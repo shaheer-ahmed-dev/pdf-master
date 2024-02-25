@@ -1,0 +1,8 @@
+<div class="input-container">
+    <img *ngIf="icon" [src]="icon" alt="icon" class="icon">
+    <input *ngIf="!textArea" [type]="type" [placeholder]="placeholder" [value]="value"
+    [style.background-color]="backgroundColor" [style.height]="textArea" (change)="onChange($event)">
+    <textarea *ngIf="textArea" id="w3review" name="w3review" rows="8" class="w-full border-none rounded p-4" cols="100"></textarea>
+    <img *ngIf="suffixIcon" [src]="suffixIcon" (click)="onSuffixIconClicked()" alt="icon" class="suffix">
+
+</div>
