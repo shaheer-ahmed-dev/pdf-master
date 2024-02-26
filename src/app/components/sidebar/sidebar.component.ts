@@ -14,14 +14,19 @@ export class SidebarComponent {
   sidebarItems: SidebarItem[] = [
     {
       icon: "./../../../assets/icons/dashboard.png",
-      label: "Dashboard",
-      route: "dashboard",
+      label: "Convert",
+      route: "convert",
     },
     {
       icon: "./../../../assets/icons/settings.png",
-      label: "Settings",
-      route: "settings"
+      label: "Admin Panel",
+      route: "adminPanel"
     }, {
+      icon: "./../../../assets/icons/policy.png",
+      label: "Account",
+      route: "account"
+    },
+     {
       icon: "./../../../assets/icons/logout.png",
       label: "Logout",
       route: "auth/login"

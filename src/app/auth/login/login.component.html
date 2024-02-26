@@ -27,9 +27,9 @@
         <div  class="side-con">
         </div>
         <div class="content-con">
-            <img src="./../../../assets/icons/centric_login_logo.svg" alt="login logo">
+            <img src="./../../../assets/img/logo.png" alt="login logo" class="img p-4 rounded-md h-20 w-25">
             <h6 class="main-heading font-bold justify-center text-4xl mb-5">LOGIN</h6>
-            <p class="flex justify-center text-gray mb-5">Sign in and start managing your candidates!</p>
+            <p class="flex justify-center text-gray mb-5">Sign in and start Editing!!</p>
             <div class="form-container">
                 <app-textfield
                 [type]="'email'"
@@ -54,6 +54,10 @@
                 </div>
                 <button class="primary-button" (click)="login()">Login</button>
             </div>
+            <div>
+              <h1 class="flex text-sm pt-2">Need an account?<a [routerLink]="['/auth/signup']" class="text-primary mb-4 ml-1 font-semibold cursor-pointer">Sign Up!</a>
+              </h1>
+          </div>
         </div>
     </div>
 </section>

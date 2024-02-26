@@ -9,6 +9,6 @@ export class AppRoutes{
     static readonly details = 'details';
     static readonly convert = 'convert';
     static readonly adminPanel = 'adminPanel';
-    static readonly upload = 'upload';
+    static readonly account = 'account';
     static readonly policies = 'policies';
 }

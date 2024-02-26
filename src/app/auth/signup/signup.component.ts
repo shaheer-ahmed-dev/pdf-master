@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, } from '@angular/forms';
+import { Router } from '@angular/router';
 import { SupabaseService } from 'src/app/supabase.service';
 
 @Component({
@@ -16,7 +17,7 @@ export class SignupComponent {
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder
+    private readonly formBuilder: FormBuilder, private router: Router
   ) {}
 
   async onSubmit(): Promise<void> {
@@ -25,7 +26,7 @@ export class SignupComponent {
       const email = this.signInForm.value.email as string
       const { error } = await this.supabase.signIn(email)
       if (error) throw error
-      alert('Check your email for the login link!')
+      alert('Check your email for the signUp link!')
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
@@ -34,5 +35,36 @@ export class SignupComponent {
       this.signInForm.reset()
       this.loading = false
     }
+  }
+  showPassword: boolean = false;
+onShowPass() {
+  this.showPassword = !this.showPassword;}
+
+  email : string = 'shaheer.ahmed@centrictech.com';
+  password : string = '123';
+  signUp(){
+    console.log(this.email, this.password);
+    this.supabase.signUp(this.email,this.password).then(
+      (res)=>{
+        console.log(res.data.user?.aud);
+        alert('Registration successfully, check your mail for verification link.');
+      }
+    ).catch((err)=>{
+      alert(err.message);
+      console.log(err);
+    });
+
+  }
+
+  forgotPassword(){
+    this.router.navigateByUrl('/forgotpassword');
+  }
+  onChangeEmail(event: any) {
+    console.log(event);
+    this.email = event;
+  }
+  onChangePass(event: any) {
+    console.log(event);
+    this.password = event;
   }
 }

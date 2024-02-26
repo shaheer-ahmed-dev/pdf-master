@@ -5,6 +5,7 @@ import { PagesComponent } from './pages.component';
 import { AppRoutes } from '../utils/resources/routes';
 import { ConvertComponent } from './convert/convert.component';
 import { AdminPageComponent } from './admin-page/admin-page.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
   {
@@ -26,8 +27,8 @@ const routes: Routes = [
         component: AdminPageComponent
       },
       {
-        path: AppRoutes.upload,
-        redirectTo: AppRoutes.upload,
+        path: AppRoutes.account,
+        component:AccountComponent
       },
 
     ]

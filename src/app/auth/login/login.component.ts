@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LocalStorageService } from 'src/app/services/localStorageService.service';
 import { SupabaseService } from 'src/app/supabase.service';
 
 @Component({
@@ -17,7 +18,7 @@ loading = false;
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder, private router: Router
+    private readonly formBuilder: FormBuilder, private router: Router,private lss:LocalStorageService
   ) {}
 
   async onSubmit(): Promise<void> {
@@ -47,32 +48,18 @@ onShowPass() {
     this.supabase.signInWithPass(this.email,this.password).then(
       (res)=>{
         console.log(res);
-        alert(res);
+        alert(res.error?.message);
+        if(res.data.user?.aud){
+          alert('Login successfully');
+this.lss.token = res.data.session.access_token;
+          this.router.navigateByUrl('/convert');
+        }
       }
-    ).catch((err)=>{
-      alert(err.message);
-      console.log(err);
+    ).catch((res)=>{
+      alert(res._session.error_description);
+      console.log(res);
+
     });
-    // this.authRepo.login(this.email, this.password).subscribe(
-    //   {
-    //     next: (data)=>{
-
-    //       console.log(data);
-    //       this.localStorageService.userData = data;
-    //       this.localStorageService.token = data.token;
-
-    //    if(data.token != null){   if(data.role == 'Admin'){  
-    //         this.router.navigateByUrl('/employees');
-
-    //        }else{
-    //           this.router.navigateByUrl('/dashboard');
-    //        }}
-    //     }, 
-    //     error: (error)=>{
-    //       console.log(error);
-    //     }
-    //   }
-    // );
 
   }
 

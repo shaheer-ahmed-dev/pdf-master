@@ -1,6 +1,6 @@
 <section class="sidebar">
     <div class="sidebar-logo-con flex justify-center mb-6">
-        <img src="./../../../assets/img/primary_logo.svg" alt="Logo Black">
+        <img src="./../../../assets/img/logo.png" alt="Logo Black">
     </div>
     <div class="sidebar-item flex items-center flex-col justify-center w-full cursor-pointer hover:text-primary text-white" *ngFor="let item of sidebarItems"
     [ngClass]="{'currentUrl': this.router.url == '/'+item.route || this.router.url.includes(item.label)}" (click)="redirectTo(item)">

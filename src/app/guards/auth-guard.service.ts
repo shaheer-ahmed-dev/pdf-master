@@ -16,7 +16,7 @@ export const AuthGuard: CanActivateFn = (route: ActivatedRouteSnapshot, state: R
 
   const token = new LocalStorageService().token;
 
-  if (token) {
+  if (token != 'undefined' && token != null && token != "") {
     return of(true);
   } else {
     router.navigate(['/auth/login']);
