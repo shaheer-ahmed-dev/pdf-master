@@ -1,9 +1,8 @@
 <h2>File Upload & Image Preview</h2>
-<p class="lead">No Plugins <b>Just Javascript</b></p>
-
+ 
 <!-- Upload  -->
 <form id="file-upload-form" class="uploader">
-  <input id="file-upload" type="file" name="fileUpload" accept="image/*" />
+  <input id="file-upload" (change)="onFileSelected($event)" type="file" name="fileUpload" accept="pdf/*" />
 
   <label for="file-upload" id="file-drag">
     <img id="file-image" src="#" alt="Preview" class="hidden">
@@ -18,6 +17,13 @@
       <progress class="progress" id="file-progress" value="0">
         <span>0</span>%
       </progress>
+
     </div>
   </label>
+
+  <div *ngFor="let file of allFiles">
+    <p>{{ file.name }}</p>
+    <!-- Add more properties as needed -->
+  </div>
+
 </form>

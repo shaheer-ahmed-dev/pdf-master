@@ -14,7 +14,7 @@ export class SidebarComponent {
   sidebarItems: SidebarItem[] = [
     {
       icon: "./../../../assets/icons/dashboard.png",
-      label: "Convert",
+      label: "Edit PDF",
       route: "convert",
     },
     {

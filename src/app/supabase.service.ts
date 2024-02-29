@@ -28,12 +28,42 @@ export class SupabaseService {
     return this._session
   }
 
+  signUpWithOtp(email: string) {
+    return this.supabase.auth.signInWithOtp({ email })
+  }
+  async getAllUser() {
+    return await this.supabase
+      .from('auth\/users')
+      .select('*');
+      }
+
   profile(user: User) {
     return this.supabase
       .from('profiles')
       .select(`username, website, avatar_url`)
       .eq('id', user.id)
       .single()
+  }
+ async uploadFile(file: File) {
+    return await this.supabase.storage.from('avatars').upload(file.name , file, {
+      cacheControl: '3600',
+      upsert: false,
+    
+
+    })
+  }
+
+  async getFiles() {
+    // return await this.supabase.storage.from('files').list();
+   return  await this.supabase
+  .storage
+  .from('avatars')
+  .list('', {
+    limit: 100,
+    offset: 0,
+    sortBy: { column: 'name', order: 'asc' },
+    
+  });
   }
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {

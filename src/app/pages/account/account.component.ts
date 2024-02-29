@@ -14,8 +14,6 @@ export class AccountComponent implements OnInit {
   profile!: Profile
   updateProfileForm! : FormGroup;
 
-  @Input()
-  session!: AuthSession
 
   
 
@@ -42,8 +40,8 @@ export class AccountComponent implements OnInit {
   async getProfile() {
     try {
       this.loading = true
-      const { user } = this.session
-      const { data: profile, error, status } = await this.supabase.profile(user)
+      // const { user } = this.supabase.session?.user;
+      const { data: profile, error, status } = await this.supabase.profile(this.supabase.session?.user!);
 
       if (error && status !== 406) {
         throw error
@@ -54,7 +52,7 @@ export class AccountComponent implements OnInit {
       }
     } catch (error) {
       if (error instanceof Error) {
-        alert(error.message)
+        // alert(error.message)
       }
     } finally {
       this.loading = false
@@ -64,14 +62,13 @@ export class AccountComponent implements OnInit {
   async updateProfile(): Promise<void> {
     try {
       this.loading = true
-      const { user } = this.session
 
       const username = this.updateProfileForm.value.username as string
       const website = this.updateProfileForm.value.website as string
       const avatar_url = this.updateProfileForm.value.avatar_url as string
 
       const { error } = await this.supabase.updateProfile({
-        id: user.id,
+        id: this.supabase.session?.user.id,
         username,
         website,
         avatar_url,

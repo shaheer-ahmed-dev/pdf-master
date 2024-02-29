@@ -5,6 +5,7 @@ import { PagesRoutingModule } from './pages-routing.module';
 import { ComponentsModule } from '../components/components.module';
 import { AccountComponent } from './account/account.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ConvertComponent } from './convert/convert.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 
@@ -13,14 +14,14 @@ import { NotFoundComponent } from './not-found/not-found.component';
   declarations: [
     PagesComponent,
     AccountComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ConvertComponent
   ],
   imports: [
     CommonModule,
     PagesRoutingModule,
     ReactiveFormsModule,
     ComponentsModule,
-    
   ]
 })
 export class PagesModule { }

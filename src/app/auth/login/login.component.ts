@@ -21,7 +21,7 @@ loading = false;
     private readonly formBuilder: FormBuilder, private router: Router,private lss:LocalStorageService
   ) {}
 
-  async onSubmit(): Promise<void> {
+  async onMagicLickSubmit(): Promise<void> {
     try {
       this.loading = true
       const email = this.signInForm.value.email as string
@@ -48,18 +48,16 @@ onShowPass() {
     this.supabase.signInWithPass(this.email,this.password).then(
       (res)=>{
         console.log(res);
-        alert(res.error?.message);
         if(res.data.user?.aud){
           alert('Login successfully');
 this.lss.token = res.data.session.access_token;
           this.router.navigateByUrl('/convert');
         }
+        if(res.error?.message){
+          alert(res.error.message);
+        }
       }
-    ).catch((res)=>{
-      alert(res._session.error_description);
-      console.log(res);
-
-    });
+    )
 
   }
 
