@@ -43,18 +43,12 @@ export class SignupComponent {
   username = '';
   email: string = '';
   password: string = '';
-  signUp() {
+  async signUp() {
     console.log(this.email, this.password);
-    this.supabase.signUp(this.email, this.password).then(
-      (res) => {
-        console.log(res.data.user?.aud);
-        // alert('Registration successfully, check your mail for verification link.');
-        alert(res.data.session?.user.aud);
-      }
-    ).catch((err) => {
-      alert(err.message);
-      console.log(err);
-    });
+  const {data, error} = await  this.supabase.signUp(this.email, this.password);
+if(data){
+  this.router.navigateByUrl('/auth/login');
+}
 
   }
 
