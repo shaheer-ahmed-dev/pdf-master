@@ -18,8 +18,16 @@ export class ForgotPasswordComponent {
     console.log(this.email);
   }
 
-  otpVerification(){
-    // this.authRepo.forgotPassword(this.email).subscribe(
+ async otpVerification(){
+    console.log(this.email);
+    if(this.email == ''){
+      alert("Please enter email");
+      return;
+    }
+ const {data,error} = await   this.authRepo.forgotPassword(this.email);
+    console.log(data);
+    console.log(error);
+ // this.authRepo.forgotPassword(this.email).subscribe(
     //   {
     //     next: (data)=>{
 
