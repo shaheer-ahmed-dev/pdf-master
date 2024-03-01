@@ -5,7 +5,7 @@ import { Profile } from '../domain/interface/profile-model';
   providedIn: 'root'
 })
 export class LocalStorageService {
-  private _userData?: Profile ;
+  private _userData?: any ;
   private _token: string = '';
 
   get userData(): any {
@@ -16,7 +16,7 @@ export class LocalStorageService {
     return this._userData;
   }
 
-  set userData(data: Profile ) {
+  set userData(data: any ) {
     this._userData = data;
     localStorage.setItem('userData', JSON.stringify(data));
   }

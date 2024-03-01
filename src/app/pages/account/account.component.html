@@ -1,4 +1,4 @@
-<form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
+<!-- <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()" class="form-widget">
     <div>
       <label for="email">Email</label>
       <input id="email" type="text" [value]="'email'" disabled />
@@ -18,7 +18,25 @@
       </button>
     </div>
   
-    <div>
-      <button class="button block" (click)="signOut()">Sign Out</button>
-    </div>
-  </form>
+  
+  </form > -->
+  <div class="container" ng-app="profileApp" ng-controller="profileController">
+    <h2>Profile Management</h2>
+    <form [formGroup]="updateProfileForm" (ngSubmit)="updateProfile()"  name="profileForm" ng-submit="updateProfile()" novalidate>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" ng-model="profile.username" required>
+        <span class="error-message" ng-show="profileForm.username.$error.required && profileForm.username.$dirty">Username is required.</span>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" ng-model="profile.email" required>
+        <span class="error-message" ng-show="profileForm.email.$error.required && profileForm.email.$dirty">Email is required.</span>
+        <span class="error-message" ng-show="profileForm.email.$error.email && profileForm.email.$dirty">Invalid email address.</span>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" ng-model="profile.password" required>
+        <span class="error-message" ng-show="profileForm.password.$error.required && profileForm.password.$dirty">Password is required.</span>
+
+        <input type="submit" value="Update Profile" ng-disabled="profileForm.$invalid">
+
+    </form>
+</div>

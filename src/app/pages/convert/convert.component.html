@@ -21,9 +21,22 @@
     </div>
   </label>
 
-  <div *ngFor="let file of allFiles">
+  <!-- <div *ngFor="let file of allFiles">
     <p>{{ file.name }}</p>
-    <!-- Add more properties as needed -->
-  </div>
+  </div> -->
+  <div *ngFor="let file of allFiles" class="file-item bg-white">
+    <p>Name: {{ file.name }}</p>
+    <p>Size: {{ file.metadata.size }}KB</p>
+    <p>Type: {{ file.metadata.mimetype }}</p>
+    <!-- <button (click)="previewFile(file)">Preview</button> -->
+    <button (click)="downloadFile(file)">Download</button>
+    <div *ngIf="file.previewUrl">
+        <!-- Image preview -->
+        <img *ngIf="file.type === 'image'" [src]="file.previewUrl" alt="Preview">
+        <!-- PDF preview -->
+        <iframe *ngIf="file.type === 'pdf'" [src]="file.previewUrl" frameborder="0" width="300" height="200"></iframe>
+    </div>
+</div>
+
 
 </form>

@@ -9,7 +9,7 @@ import { LocalStorageService } from 'src/app/services/localStorageService.servic
 export class HeaderComponent implements OnInit {
   constructor(private localStorage: LocalStorageService) { }
 ngOnInit(): void {
-  this.userName = this.localStorage.userData.employeeName;
+  this.userName = this.localStorage.userData.username;
 }
 togglePopup: Boolean = false;
 userName: String = "";

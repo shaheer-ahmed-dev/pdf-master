@@ -1,1 +1,13 @@
-<p>admin-page works!</p>
+<div class="container" ng-app="adminPanelApp" >
+    <h2>User List</h2>
+    <ul class="user-list">
+        <li class="user-item" *ngFor="let user of allUsers">
+            <span class="text-black">{{user.username}}</span>
+            <div class="actions">
+                <a (click)="editUser(user)">Edit</a>
+                <a (click)="removeUser(user)">Remove</a>
+            </div>
+        </li>
+
+    </ul>
+</div>

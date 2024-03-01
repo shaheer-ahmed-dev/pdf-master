@@ -56,4 +56,37 @@ allFiles?: any[] | null;
         console.log(error);
       }
     }
+    previewFile(file: any) {
+      // Assuming file.url contains the URL from which the file can be downloaded
+      if (file.type === 'image' || file.type === 'pdf') {
+          file.previewUrl = file.url; // Assuming file.url is the URL to the file
+      }
+      // You can add more conditions for different file types
+  }
+  // public download() {
+  //   if (this.isCropImage) {
+  //     let canvas = this.cropper.getCroppedCanvas();
+  //     this.getCanvasToDownload(canvas)
+  //   } else {
+  //     html2canvas(document.querySelector(".pdf-container") as HTMLElement).then((canvas: any) => {
+  //       this.getCanvasToDownload(canvas)
+  //     })
+  //   }
+  // }
+
+  // private getCanvasToDownload(canvas:any){
+  //   let ctx = canvas.getContext('2d');
+  //   ctx.scale(3, 3);
+  //   let image = canvas.toDataURL("image/png").replace("image/png", "image/png");
+  //   var link = document.createElement('a');
+  //   link.download = "my-image.png";
+  //   link.href = image;
+  //   link.click();
+  // }
+async  downloadFile(file: any) {
+      // Assuming file.url contains the URL from which the file can be downloaded
+      const { data, error } = await this.supabase.downloadFile(file.name);
+console.log(data);
+    }
+  
 }

@@ -27,14 +27,15 @@ export class SupabaseService {
     })
     return this._session
   }
+  magicLinkLogin(email: string) {
+    return this.supabase.auth.signInWithOtp({ email })
+  }
 
   signUpWithOtp(email: string) {
     return this.supabase.auth.signInWithOtp({ email })
   }
   async getAllUser() {
-    return await this.supabase
-      .from('auth\/users')
-      .select('*');
+    return   await this.supabase.auth.admin.listUsers()
       }
 
   profile(user: User) {
@@ -51,6 +52,20 @@ export class SupabaseService {
     
 
     })
+  }
+  async downloadFile(path: string) {
+    
+return await this.supabase
+.storage
+.from('avatars')
+.download(path, {
+  transform: {
+    width: 100,
+    height: 100,
+    quality: 80
+  }
+})
+
   }
 
   async getFiles() {

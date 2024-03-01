@@ -23,10 +23,15 @@ loading = false;
 
   async onMagicLickSubmit(): Promise<void> {
     try {
+      if(this.email == '' ){
+        alert('Please provide an email address');
+        return;
+      }
       this.loading = true
       const email = this.signInForm.value.email as string
-      const { error } = await this.supabase.signIn(email)
+      const { data ,error } = await this.supabase.magicLinkLogin(email)
       if (error) throw error
+      console.log(data);
       alert('Check your email for the login link!')
     } catch (error) {
       if (error instanceof Error) {
@@ -41,16 +46,21 @@ loading = false;
 onShowPass() {
   this.showPassword = !this.showPassword;}
 
-  email : string = 'shaheer.ahmed@centrictech.com';
-  password : string = '123';
+  email : string = '';
+  password : string = '';
   login(){
     console.log(this.email, this.password);
+    if(this.email == '' || this.password == ''){
+      alert('Please fill all the fields');
+      return;
+    }
     this.supabase.signInWithPass(this.email,this.password).then(
       (res)=>{
         console.log(res);
         if(res.data.user?.aud){
           alert('Login successfully');
 this.lss.token = res.data.session.access_token;
+this.lss.userData = res.data.session.user;
           this.router.navigateByUrl('/convert');
         }
         if(res.error?.message){

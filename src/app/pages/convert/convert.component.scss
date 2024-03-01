@@ -180,3 +180,31 @@ p {
   }
 }
 
+.file-item {
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-item:hover {
+  background-color: #e6e6e6;
+}
+
+.file-item p {
+  margin: 0;
+}
+
+.file-item button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-item button:hover {
+  background-color: #0056b3;
+}
