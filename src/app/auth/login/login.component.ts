@@ -82,4 +82,7 @@ this.lss.userData = res.data.session.user;
     console.log(event);
     this.password = event;
   }
+
+  async signinwithgoogle(){const { data, error } = await this.supabase.signinwithgoogle(); console.log(error); console.log(data);}
+  
 }
