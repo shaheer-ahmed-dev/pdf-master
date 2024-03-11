@@ -21,52 +21,47 @@
       </form>
     </div>
   </div> -->
-  <section class="login-main-con">
-    
-    <div class="main-content">
-        <div  class="side-con">
-        </div>
-        <div class="content-con">
-            <img src="./../../../assets/img/logo.png" alt="login logo" class="img p-4 rounded-md h-24 w-25">
-            <h6 class="main-heading font-bold justify-center text-4xl mb-5">LOGIN</h6>
-            <p class="flex justify-center text-gray mb-5">Sign in and start Editing!!</p>
-            <div class="form-container">
-                <app-textfield
-                [type]="'email'"
-                [icon]="'./../../../assets/icons/user.svg'"
-                [placeholder]="'Email'"
-                [value]="email"
-                [backgroundColor]="'#9BA5B710'"
-                (valueChange)="onChangeEmail($event)"
-                ></app-textfield>
-                <app-textfield
-                [type]="showPassword ? 'Text' : 'Password'"
-                [icon]="'./../../../assets/icons/password_lock.svg'"
-                [placeholder]="'Password'"
-                [value]="password"
-                (valueChange)="onChangePass($event)"
-                (onSuffixIconClick)="onShowPass()"
-                [suffixIcon]=" showPassword ?  './../../../assets/icons/visibility.svg' : './../../../assets/icons/visibility_off.svg'"
-                [backgroundColor]="'#9BA5B710'"
-                ></app-textfield>
-                <div class="flex self-end">
-                    <a [routerLink]="['/auth/forgot']" class="font-semibold mb-4">Forgot Password?</a>
-                </div>
-                <button class="primary-button" (click)="login()">Login</button>
-                <!-- <button class="text-purple-400 mb-4 ml-1 font-semibold cursor-pointer" (click)="onMagicLickSubmit()">Login with magic Link!</button> -->
-            </div>
-            <div>
-              
-              
-              <div class="px-6 sm:px-0 max-w-sm">
-                <button type="button"  (click)="signinwithgoogle()" class="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"><svg class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512"><path fill="currentColor" d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z"></path></svg>Sign up with Google<div></div></button>
-            </div>
-<h1 class="justify-center">or</h1> 
+<section class="login-main-con">
 
-            <h1 class="flex text-sm pt-2">Need an account?<a [routerLink]="['/auth/signup']" class="text-primary mb-4 ml-1 font-semibold cursor-pointer">Sign Up!</a>
-            </h1>
-
-          </div>
-        </div>
+  <div class="main-content">
+    <div class="side-con">
     </div>
+    <div class="content-con">
+      <img src="./../../../assets/img/logo.png" alt="login logo" class="img p-4 rounded-md h-24 w-25">
+      <h6 class="main-heading font-bold justify-center text-4xl mb-5">LOGIN</h6>
+      <p class="flex justify-center text-gray mb-5">Sign in and start Editing!!</p>
+      <div class="form-container">
+        <app-textfield [type]="'email'" [icon]="'./../../../assets/icons/user.svg'" [placeholder]="'Email'"
+          [value]="email" [backgroundColor]="'#9BA5B710'" (valueChange)="onChangeEmail($event)"></app-textfield>
+        <app-textfield [type]="showPassword ? 'Text' : 'Password'" [icon]="'./../../../assets/icons/password_lock.svg'"
+          [placeholder]="'Password'" [value]="password" (valueChange)="onChangePass($event)"
+          (onSuffixIconClick)="onShowPass()"
+          [suffixIcon]=" showPassword ?  './../../../assets/icons/visibility.svg' : './../../../assets/icons/visibility_off.svg'"
+          [backgroundColor]="'#9BA5B710'"></app-textfield>
+        <div class="flex self-end">
+          <a [routerLink]="['/auth/forgot']" class="font-semibold mb-4">Forgot Password?</a>
+        </div>
+        <button class="primary-button px-6 sm:px-0 max-w-sm" (click)="login()">Login</button>
+        <div class="flex-col p-1">
+          <div class="px-6 sm:px-0 max-w-sm">
+            <button type="button" (click)="signinwithgoogle()"
+              class="text-white w-full  bg-[#4285F4] hover:bg-[#4285F4]/90 focus:ring-4 focus:outline-none focus:ring-[#4285F4]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center justify-between dark:focus:ring-[#4285F4]/55 mr-2 mb-2"><svg
+                class="mr-2 -ml-1 w-4 h-4" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="google"
+                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488 512">
+                <path fill="currentColor"
+                  d="M488 261.8C488 403.3 391.1 504 248 504 110.8 504 0 393.2 0 256S110.8 8 248 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9C258.5 52.6 94.3 116.6 94.3 256c0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9H248v-85.3h236.1c2.3 12.7 3.9 24.9 3.9 41.4z">
+                </path>
+              </svg>Sign up with Google<div></div></button>
+          </div>
+          <h1 class="self-center text-center uppercase font-bold ">or</h1>
+
+          <h1 class="flex justify-center text-sm ">Need an account?<a [routerLink]="['/auth/signup']"
+              class="text-primary mb-4 ml-1 font-semibold cursor-pointer">Sign Up!</a>
+          </h1>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
 </section>

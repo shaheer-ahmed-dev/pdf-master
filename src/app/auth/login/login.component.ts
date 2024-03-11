@@ -10,7 +10,7 @@ import { SupabaseService } from 'src/app/supabase.service';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-loading = false;
+  loading = false;
 
   signInForm = this.formBuilder.group({
     email: '',
@@ -18,21 +18,21 @@ loading = false;
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder, private router: Router,private lss:LocalStorageService
-  ) {}
+    private readonly formBuilder: FormBuilder, private router: Router, private lss: LocalStorageService
+  ) { }
 
   async onMagicLickSubmit(): Promise<void> {
     try {
-      if(this.email == '' ){
+      if (this.email == '') {
         alert('Please provide an email address');
         return;
       }
       this.loading = true
       const email = this.signInForm.value.email as string
-      const { data ,error } = await this.supabase.magicLinkLogin(email)
+      const { data, error } = await this.supabase.magicLinkLogin(email)
       if (error) throw error
       console.log(data);
-      alert('Check your email for the login link!')
+      alert(data?.user || 'Check your email for the magic link')
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message)
@@ -43,27 +43,28 @@ loading = false;
     }
   }
   showPassword: boolean = false;
-onShowPass() {
-  this.showPassword = !this.showPassword;}
+  onShowPass() {
+    this.showPassword = !this.showPassword;
+  }
 
-  email : string = '';
-  password : string = '';
-  login(){
+  email: string = '';
+  password: string = '';
+  login() {
     console.log(this.email, this.password);
-    if(this.email == '' || this.password == ''){
+    if (this.email == '' || this.password == '') {
       alert('Please fill all the fields');
       return;
     }
-    this.supabase.signInWithPass(this.email,this.password).then(
-      (res)=>{
+    this.supabase.signInWithPass(this.email, this.password).then(
+      (res) => {
         console.log(res);
-        if(res.data.user?.aud){
+        if (res.data.user?.aud) {
           alert('Login successfully');
-this.lss.token = res.data.session.access_token;
-this.lss.userData = res.data.session.user;
+          this.lss.token = res.data.session.access_token;
+          this.lss.userData = res.data.session.user;
           this.router.navigateByUrl('/convert');
         }
-        if(res.error?.message){
+        if (res.error?.message) {
           alert(res.error.message);
         }
       }
@@ -71,7 +72,7 @@ this.lss.userData = res.data.session.user;
 
   }
 
-  forgotPassword(){
+  forgotPassword() {
     this.router.navigateByUrl('/forgotpassword');
   }
   onChangeEmail(event: any) {
@@ -83,6 +84,6 @@ this.lss.userData = res.data.session.user;
     this.password = event;
   }
 
-  async signinwithgoogle(){const { data, error } = await this.supabase.signinwithgoogle(); console.log(error); console.log(data);}
-  
+  async signinwithgoogle() { const { data, error } = await this.supabase.signinwithgoogle(); console.log(error); console.log(data); }
+
 }
