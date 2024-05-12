@@ -1,18 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/supabase.service';
 import { FileModel } from 'src/app/domain/interface/file-model'
+import WebViewer from '@pdftron/webviewer';
+// import{webViewer} from 'src/assets/pdfjs/web/viewer.js';   
 
 @Component({
   selector: 'app-convert',
   templateUrl: './convert.component.html',
   styleUrls: ['./convert.component.scss']
 })
-export class ConvertComponent {
+export class ConvertComponent implements AfterViewInit{
+  constructor(private supabase: SupabaseService) {}
+
   fileName = '';
   url = '';
   file!: File;
-    constructor(private supabase: SupabaseService) {}
+  @ViewChild('viewer') viewerRef!: ElementRef;
+  ngAfterViewInit(): void {
+    WebViewer({
+      path: '../assets/lib',
+      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    }, this.viewerRef.nativeElement).then(instance =>{
+      instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf');
+    })
+    //  document.getElementById('webViewer')).then((instance) => {
+    //   // Call APIs here
+    //   const { docViewer, Annotations } = instance;
+    //   const annotManager = docViewer.getAnnotationManager();
+    //   const rectangleAnnot = new Annotations.RectangleAnnotation();
+    //   rectangleAnnot.PageNumber = 1;
+    //   rectangleAnnot.X = 100;
+    //   rectangleAnnot.Y = 150;
+    //   rectangleAnnot.Width = 200;
+    //   rectangleAnnot.Height = 50;
+    //   rectangleAnnot.Author = annotManager.getCurrentUser();
+    //   annotManager.addAnnotation(rectangleAnnot);
+    //   annotManager.redrawAnnotation(rectangleAnnot);
+    // });
+  }
  async ngOnInit() {
 this.getFiles();  
 }
