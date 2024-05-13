@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/localStorageService.service';
@@ -9,17 +9,26 @@ import { SupabaseService } from 'src/app/supabase.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   loading = false;
 
   signInForm = this.formBuilder.group({
     email: '',
   })
+rememberMe: boolean = true;
+rememberUser: any;
 
   constructor(
     private readonly supabase: SupabaseService,
-    private readonly formBuilder: FormBuilder, private router: Router, private lss: LocalStorageService
+    private readonly formBuilder: FormBuilder, private router: Router, public lss: LocalStorageService
   ) { }
+  ngOnInit(): void {
+  // if(this.lss.rememberUser){
+  //   this.email = this.lss.rememberUser.email;
+  //   this.password = this.lss.rememberUser.password;
+  //   this.rememberMe = this.lss.rememberUser.rememberMe;
+  // }
+  }
 
   async onMagicLickSubmit(): Promise<void> {
     try {
@@ -47,19 +56,32 @@ export class LoginComponent {
     this.showPassword = !this.showPassword;
   }
 
+
   email: string = '';
   password: string = '';
   login() {
+
+
     console.log(this.email, this.password);
     if (this.email == '' || this.password == '') {
       alert('Please fill all the fields');
+      return;
+    }
+    if (this.password.length < 6) {
+      alert('password cannot be less than 6 characters');
       return;
     }
     this.supabase.signInWithPass(this.email, this.password).then(
       (res) => {
         console.log(res);
         if (res.data.user?.aud) {
-          alert('Login successfully');
+          // alert('Login successfully');
+          // if (this.rememberMe) {
+          //   this.lss.rememberUser = { "email": this.email.toString(), "password": this.password.toString()};
+          // } else {
+          //   this.lss.rememberUser = null;
+          // }
+          this.supabase.session;
           this.lss.token = res.data.session.access_token;
           this.lss.userData = res.data.session.user;
           this.router.navigateByUrl('/convert');

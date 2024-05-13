@@ -39,6 +39,11 @@
           [suffixIcon]=" showPassword ?  './../../../assets/icons/visibility.svg' : './../../../assets/icons/visibility_off.svg'"
           [backgroundColor]="'#9BA5B710'"></app-textfield>
         <div class="flex self-end">
+          <!-- <input (change)="rememberMe =!rememberMe" [value]="rememberMe" checked type="checkbox" name="rememberMe"
+            id="rememberMe" class="h-4 w-4 mt-1 ml-2">
+          <h1 class="font-semibold mb-4 ">
+            Remember Me</h1>
+            <div style="width: 20px;"></div> -->
           <a [routerLink]="['/auth/forgot']" class="font-semibold mb-4">Forgot Password?</a>
         </div>
         <button class="primary-button px-6 sm:px-0 max-w-sm" (click)="login()">Login</button>

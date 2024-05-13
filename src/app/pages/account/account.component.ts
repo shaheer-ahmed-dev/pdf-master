@@ -22,8 +22,8 @@ export class AccountComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {}
 
-  async ngOnInit(): Promise<void> {
-    await this.getProfile()
+   ngOnInit(): void {
+     this.getProfile()
     this.updateProfileForm  = this.formBuilder.group({
       username: '',
       website: '',
@@ -41,15 +41,9 @@ export class AccountComponent implements OnInit {
     try {
       this.loading = true
       // const { user } = this.supabase.session?.user;
-      const { data: profile, error, status } = await this.supabase.profile(this.supabase.session?.user!);
-
-      if (error && status !== 406) {
-        throw error
-      }
-
-      if (profile) {
-        this.profile = profile
-      }
+      const { data, error }  = await this.supabase.getProfile(this.supabase.session?.user.id!);
+      console.log(data[0]);
+      this.profile = data[0];
     } catch (error) {
       if (error instanceof Error) {
         // alert(error.message)
@@ -72,7 +66,8 @@ export class AccountComponent implements OnInit {
         username,
         website,
         avatar_url,
-      })
+        email: this.supabase.session?.user.email ?? '',
+      }, this.supabase.session?.user.id!)
       if (error) throw error
     } catch (error) {
       if (error instanceof Error) {

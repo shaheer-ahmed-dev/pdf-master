@@ -6,6 +6,7 @@ import { Profile } from '../domain/interface/profile-model';
 })
 export class LocalStorageService {
   private _userData?: any ;
+  private _rememberUser?: any ;
   private _token: string = '';
 
   get userData(): any {
@@ -20,6 +21,18 @@ export class LocalStorageService {
     this._userData = data;
     localStorage.setItem('userData', JSON.stringify(data));
   }
+  // get rememberUser(): any {
+  //   if (!this.rememberUser) {
+  //     const data = localStorage.getItem('rememberUser');
+  //     this.rememberUser = data ? JSON.parse(data) : null;
+  //   }
+  //   return this.rememberUser;
+  // }
+
+  // set rememberUser(data: any ) {
+  //   this.rememberUser = data;
+  //   localStorage.setItem('rememberUser', JSON.stringify(data));
+  // }
 
   get token(): string {
     if (!this._token) {

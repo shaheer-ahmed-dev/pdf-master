@@ -2,9 +2,11 @@
     <h2>User List</h2>
     <ul class="user-list">
         <li class="user-item" *ngFor="let user of allUsers">
-            <span class="text-black">{{user.username}}</span>
+            <span class="text-black">Name: {{user.name}}</span>
+            <br>
+            <span class="text-black">Email: {{user.email}}</span>
             <div class="actions">
-                <a (click)="editUser(user)">Edit</a>
+                <!-- <a (click)="editUser(user)">Edit</a> -->
                 <a (click)="removeUser(user)">Remove</a>
             </div>
         </li>

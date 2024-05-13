@@ -64,6 +64,14 @@
                 (valueChange)="onChangeEmail($event)"
                 ></app-textfield>
                 <app-textfield
+                [type]="'text'"
+                [icon]="'./../../../assets/icons/user.svg'"
+                [placeholder]="'User Name'"
+                [value]="username"
+                [backgroundColor]="'#9BA5B710'"
+                (valueChange)="onChangeUsername($event)"
+                ></app-textfield>
+                <app-textfield
                 [type]="showPassword ? 'Text' : 'Password'"
                 [icon]="'./../../../assets/icons/password_lock.svg'"
                 [placeholder]="'Password'"
