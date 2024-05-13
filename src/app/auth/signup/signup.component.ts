@@ -76,9 +76,10 @@ onChangeUsername($event: string) {
   const {data, error} = await this.supabase.updateProfile(profile, this.id);
   if(data){
     // alert('Account created successfully');
-    console.log(data);
     // this.router.navigateByUrl('/auth/login');
+    console.log(data);
   }
+  console.log(data);
   this.router.navigateByUrl('/auth/login');
 }
 
