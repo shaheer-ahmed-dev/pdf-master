@@ -1,7 +1,11 @@
-<h2>File Upload & Image Preview</h2>
+<div class="flex p-2" >
+ <img *ngIf="page ==1" (click)="page =0; title = 'File Upload & Image Preview'" src="../../../assets/icons/back_icon.svg" alt="back" class="flex mr-4 cursor-pointer" style="color: blue;">
+  <h2 >{{title}}</h2>
+
+</div>
  
 <!-- Upload  -->
-<form id="file-upload-form" class="uploader">
+<form *ngIf="page ==0" id="file-upload-form" class="uploader">
   <input id="file-upload" (change)="onFileSelected($event)" type="file" name="fileUpload" accept="pdf/*" />
 
   <label for="file-upload" id="file-drag">
@@ -28,18 +32,15 @@
     <p>Name: {{ file.name }}</p>
     <p>Size: {{ file.metadata.size }}KB</p>
     <p>Type: {{ file.metadata.mimetype }}</p>
-    <!-- <button (click)="previewFile(file)">Preview</button> -->
-    <button (click)="downloadFile(file)">Download</button>
-    <div *ngIf="file.previewUrl">
-        <!-- Image preview -->
-        <img *ngIf="file.type === 'image'" [src]="file.previewUrl" alt="Preview">
-        <!-- PDF preview -->
-        <iframe *ngIf="file.type === 'pdf'" [src]="file.previewUrl" frameborder="0" width="300" height="200"></iframe>
-    </div>
+    <div class="flex button-con"> <div class="primary-button"  (click)="downloadFile(file.name)">Download</div>
+    <div class="primary-button" (click)="deleteFile(file.name)"><h1 class="text-white">Delete</h1></div>
+    <div class="primary-button" (click)="previewFile(file.name)">View File</div>
+    
+      </div>
 </div>
 
 
 </form>
 
 
-<div #viewer class="webViewer"></div>
+<div  #viewer class="webViewer"></div>

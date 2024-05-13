@@ -16,6 +16,9 @@ export class AppComponent {
   ngOnInit() {
     this.supabase.authChanges((_, session) => (this.session = session,
       console.log("this.session", this.session),
+     
+      this.lss.userData = session?.user,
+this.supabase.userId = session?.user?.id!,
       this.lss.token = session?.access_token!
       ))
   }

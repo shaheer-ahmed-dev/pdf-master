@@ -45,6 +45,14 @@ export class SignupComponent {
   password: string = '';
   async signUp() {
     console.log(this.email, this.password);
+    if (this.email == '' || this.password == '') {
+      alert('Please fill all the fields');
+      return;
+    }
+    if (this.password.length < 6) {
+      alert('password cannot be less than 6 characters');
+      return;
+    }
   const {data, error} = await  this.supabase.signUp(this.email, this.password);
 if(data){
   this.router.navigateByUrl('/auth/login');

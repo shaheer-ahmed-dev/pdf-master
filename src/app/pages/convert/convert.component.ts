@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 import { SupabaseClient } from '@supabase/supabase-js';
 import { SupabaseService } from 'src/app/supabase.service';
 import { FileModel } from 'src/app/domain/interface/file-model'
-import WebViewer from '@pdftron/webviewer';
+import WebViewer, { WebViewerInstance } from '@pdftron/webviewer';
 // import{webViewer} from 'src/assets/pdfjs/web/viewer.js';   
 
 @Component({
@@ -10,20 +10,29 @@ import WebViewer from '@pdftron/webviewer';
   templateUrl: './convert.component.html',
   styleUrls: ['./convert.component.scss']
 })
-export class ConvertComponent implements AfterViewInit{
-  constructor(private supabase: SupabaseService) {}
-
+export class ConvertComponent implements AfterViewInit {
+  constructor(private supabase: SupabaseService) { }
+  title: string = 'File Upload & Image Preview';
   fileName = '';
   url = '';
   file!: File;
+  page = 0;
   @ViewChild('viewer') viewerRef!: ElementRef;
+  instance!: WebViewerInstance;
+  allFiles?: any[] | null;
+
   ngAfterViewInit(): void {
-    WebViewer({
+   if(this.page == 1){ WebViewer({
+      licenseKey: 'demo:1715442307860:7fcce03e0300000000e8f38189ec9207606c14867c06f652196cc3a3d0',
       path: '../assets/lib',
-      initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
-    }, this.viewerRef.nativeElement).then(instance =>{
-      instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf');
-    })
+      enableOfficeEditing: true,
+      enableFilePicker: true,
+      
+      // initialDoc: 'https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf',
+    }, this.viewerRef.nativeElement).then(instance => {
+      this.instance = instance;
+      // this.instance.UI.loadDocument('https://pdftron.s3.amazonaws.com/downloads/pl/demo-annotated.pdf');
+    })}
     //  document.getElementById('webViewer')).then((instance) => {
     //   // Call APIs here
     //   const { docViewer, Annotations } = instance;
@@ -39,80 +48,51 @@ export class ConvertComponent implements AfterViewInit{
     //   annotManager.redrawAnnotation(rectangleAnnot);
     // });
   }
- async ngOnInit() {
-this.getFiles();  
-}
-allFiles?: any[] | null; 
-
-    async onFileSelected(event :any) {
-
-        const file:File = event.target.files[0];
-
-        if (file) {
-
-            this.fileName = file.name;
-
-            const formData = new FormData();
-
-            formData.append("thumbnail", file);
-            console.log(formData);
-            if (event.target.files) {
-              this.file = event.target.files[0];
-              const { data, error } = await this.supabase.uploadFile(this.file);
-        
-                // You can uncomment this console to check whether its successfully uploaded
-                console.log(data ? 'Success' : error)
-
-                this.getFiles();
-
-              }
-
-            // const upload$ = this.http.post("/api/thumbnail-upload", formData);
-
-            // upload$.subscribe();
-        }
-    }
-
-    async getFiles(){
-      const {data, error} = await this.supabase.getFiles();
-      try{
-        this.allFiles = data;
-        console.log(this.allFiles);
-      }catch(error){
-        console.log(error);
-      }
-    }
-    previewFile(file: any) {
-      // Assuming file.url contains the URL from which the file can be downloaded
-      if (file.type === 'image' || file.type === 'pdf') {
-          file.previewUrl = file.url; // Assuming file.url is the URL to the file
-      }
-      // You can add more conditions for different file types
+  async ngOnInit() {
+    this.getFiles();
   }
-  // public download() {
-  //   if (this.isCropImage) {
-  //     let canvas = this.cropper.getCroppedCanvas();
-  //     this.getCanvasToDownload(canvas)
-  //   } else {
-  //     html2canvas(document.querySelector(".pdf-container") as HTMLElement).then((canvas: any) => {
-  //       this.getCanvasToDownload(canvas)
-  //     })
-  //   }
-  // }
 
-  // private getCanvasToDownload(canvas:any){
-  //   let ctx = canvas.getContext('2d');
-  //   ctx.scale(3, 3);
-  //   let image = canvas.toDataURL("image/png").replace("image/png", "image/png");
-  //   var link = document.createElement('a');
-  //   link.download = "my-image.png";
-  //   link.href = image;
-  //   link.click();
-  // }
-async  downloadFile(file: any) {
-      // Assuming file.url contains the URL from which the file can be downloaded
-      const { data, error } = await this.supabase.downloadFile(file.name);
-console.log(data);
+  async onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.fileName = file.name;
+      if (event.target.files) {
+        this.file = event.target.files[0];
+        const { data, error } = await this.supabase.uploadFile(this.file);
+        alert(data ? 'Success: File has been uploaded!' : error.message);
+        this.getFiles();
+      }
     }
-  
+  }
+
+  async getFiles() {
+    const { data, error } = await this.supabase.getFiles();
+    if (data) {
+      this.allFiles = data;
+      console.log(this.allFiles);
+    } else if (error) {
+      console.log(error);
+      alert(error.message);
+    }
+  }
+  async previewFile(file: string) {
+    // Assuming file.url contains the URL from which the file can be downloaded
+    const data = await this.supabase.getFileUrl(file);
+    // alert(data.publicUrl);
+this.page = 1;
+this.title = file;
+    this.ngAfterViewInit();
+    this.instance.UI.loadDocument(data.publicUrl);
+
+  }
+
+  async downloadFile(name: string) {
+    const data = await this.supabase.downloadFile(name);
+    window.open(data.publicUrl);
+    console.log(data);
+  }
+  async deleteFile(arg0: string) {
+    const { data, error } = await this.supabase.deleteFile(arg0);
+    alert(data ? 'Success' : error.message);
+  }
 }

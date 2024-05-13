@@ -1,29 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import {
   AuthChangeEvent,
   AuthSession,
   createClient,
   Session,
   SupabaseClient,
-  User,} from '@supabase/supabase-js'
+  User,
+} from '@supabase/supabase-js'
 
 import { environment } from 'src/environments/environment'
 import { Profile } from './domain/interface/profile-model';
+import { LocalStorageService } from './services/localStorageService.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SupabaseService {
-
+export class SupabaseService implements OnInit {
+  userId: string = '';
   private supabase: SupabaseClient
   _session: AuthSession | null = null
 
-  constructor() {
+  constructor(private lss: LocalStorageService) {
     this.supabase = createClient(environment.supabaseUrl, environment.supabaseKey)
+  }
+  ngOnInit(): void {
+    this.userId = this.lss.userData.userId || '';
+    console.log(`${this.userId} here is the user id`);
   }
 
   get session() {
-    this.supabase.auth.getSession().then(({ data  }) => {
+    this.supabase.auth.getSession().then(({ data }) => {
       this._session = data.session
+      this.userId = data.session?.user?.id || ''
+      console.log("this.userId", this.userId);
     })
     return this._session
   }
@@ -35,8 +43,8 @@ export class SupabaseService {
     return this.supabase.auth.signInWithOtp({ email })
   }
   async getAllUser() {
-    return   await this.supabase.auth.admin.listUsers()
-      }
+    return await this.supabase.auth.admin.listUsers()
+  }
 
   profile(user: User) {
     return this.supabase
@@ -45,40 +53,46 @@ export class SupabaseService {
       .eq('id', user.id)
       .single()
   }
- async uploadFile(file: File) {
-    return await this.supabase.storage.from('avatars').upload(file.name , file, {
+  async uploadFile(file: File) {
+
+    return await this.supabase.storage.from(`pdf/${this.userId}`).upload(file.name, file, {
       cacheControl: '3600',
       upsert: false,
-    
-
     })
   }
-  async downloadFile(path: string) {
-    
-return await this.supabase
-.storage
-.from('avatars')
-.download(path, {
-  transform: {
-    width: 100,
-    height: 100,
-    quality: 80
+  getFileUrl(path: string) {
+    const { data } = this.supabase
+      .storage
+      .from(`pdf`)
+      .getPublicUrl(`${this.userId}/${path}`)
+    return data;
   }
-})
+  async downloadFile(path: string) {
+    // we are using the getPublicUrl method to download files because the files are in a public bucket.
+    // If you want to download files from a private bucket, you need to use the download method.
+    console.log(`${this.userId}/${path} this is what im sending`);
+    const { data } = this.supabase
+      .storage
+      .from(`pdf`)
+      .getPublicUrl(`${this.userId}/${path}`, { download: true })
+    return data;
 
+  }
+  deleteFile(path: string) {
+    console.log(`${this.userId}/${path} this is what im sending`);
+    return this.supabase.storage.from(`pdf`).remove([`${this.userId}/${path}`])
   }
 
   async getFiles() {
-    // return await this.supabase.storage.from('files').list();
-   return  await this.supabase
-  .storage
-  .from('avatars')
-  .list('', {
-    limit: 100,
-    offset: 0,
-    sortBy: { column: 'name', order: 'asc' },
-    
-  });
+    return await this.supabase
+      .storage
+      .from(`pdf`)
+      .list(`${this.userId}/`, {
+        limit: 100,
+        offset: 0,
+        sortBy: { column: 'name', order: 'asc' },
+
+      });
   }
 
   authChanges(callback: (event: AuthChangeEvent, session: Session | null) => void) {
@@ -93,17 +107,17 @@ return await this.supabase
   signInWithPass(email: string, password: string) {
     return this.supabase.auth.signInWithPassword({ email, password })
   }
-//this is for registration
+  //this is for registration
   signUp(email: string, password: string) {
     return this.supabase.auth.signUp({ email, password })
   }
   forgotPassword(email: string) {
-    return this.supabase.auth.resetPasswordForEmail(email) ; 
+    return this.supabase.auth.resetPasswordForEmail(email);
   }
   resetPassword(token: string, password: string, confirmPassword: string) {
     throw new Error('Method not implemented.');
   }
-  
+
 
   signOut() {
     return this.supabase.auth.signOut()
@@ -124,16 +138,17 @@ return await this.supabase
 
   uploadAvatar(filePath: string, file: File) {
     return this.supabase.storage.from('avatars').upload(filePath, file)
-    
+
   }
-  async signinwithgoogle(){return await this.supabase.auth.signInWithOAuth({
-    provider: 'google',
-    options: {
-      queryParams: {
-        access_type: 'offline',
-        prompt: 'consent',
+  async signinwithgoogle() {
+    return await this.supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        queryParams: {
+          access_type: 'offline',
+          prompt: 'consent',
+        },
       },
-    },
-  })
+    })
   }
 }

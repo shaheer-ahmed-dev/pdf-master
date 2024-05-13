@@ -8,7 +8,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: ()=> import('./pages/pages.module').then(m=>m.PagesModule),
-    // canActivate: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: AppRoutes.auth,
