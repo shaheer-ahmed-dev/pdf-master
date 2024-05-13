@@ -10,17 +10,13 @@ import { SupabaseService } from 'src/app/supabase.service';
 export class AdminPageComponent implements OnInit{
 constructor(private supbase: SupabaseService){}
   async ngOnInit(): Promise<void> {
-const{ data: { users }, error } = await this.supbase.getAllUser();
-this.allUsers.push(users);
-console.log(users);
+const{ data, error } = await this.supbase.getAllUser();
+this.allUsers = data;
+console.log(data);
 console.log(error);
   }
 
-  allUsers: any[] = [
-    { username: 'User 1',avatar_url :'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200', website: '', id: ''},
-    { username: 'User 2',avatar_url :'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200', website: '', id: ''},
-    { username: 'User 3',avatar_url :'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200', website: '', id: ''}
-];
+  allUsers: any[] = [];
 
 editUser(user: Profile) {
     // Implement edit functionality

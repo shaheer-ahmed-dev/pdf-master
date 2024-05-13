@@ -37,6 +37,6 @@
         <span class="error-message" ng-show="profileForm.password.$error.required && profileForm.password.$dirty">Password is required.</span>
 
         <input type="submit" value="Update Profile" ng-disabled="profileForm.$invalid">
-
+{{profile | json}}
     </form>
 </div>

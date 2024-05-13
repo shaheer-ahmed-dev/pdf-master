@@ -92,7 +92,10 @@ this.title = file;
     console.log(data);
   }
   async deleteFile(arg0: string) {
+    alert(`Are you sure you want to delete ${arg0}?`);
+    
     const { data, error } = await this.supabase.deleteFile(arg0);
+    this.getFiles();
     alert(data ? 'Success' : error.message);
   }
 }

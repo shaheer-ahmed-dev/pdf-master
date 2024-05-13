@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Profile } from 'src/app/domain/interface/profile-model';
 import { SupabaseService } from 'src/app/supabase.service';
 
 @Component({
@@ -9,6 +10,9 @@ import { SupabaseService } from 'src/app/supabase.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent {
+onChangeUsername($event: string) {
+    this.username = $event;
+  }
   loading = false;
 
   signInForm = this.formBuilder.group({
@@ -43,10 +47,15 @@ export class SignupComponent {
   username = '';
   email: string = '';
   password: string = '';
+  id: string = '';
   async signUp() {
-    console.log(this.email, this.password);
-    if (this.email == '' || this.password == '') {
+    console.log(this.email, this.password,this.username);
+    if (this.email == '' || this.password == '' || this.username == '') {
       alert('Please fill all the fields');
+      return;
+    }
+    if (this.username.length < 4) {
+      alert('password cannot be less than 4 characters');
       return;
     }
     if (this.password.length < 6) {
@@ -54,8 +63,22 @@ export class SignupComponent {
       return;
     }
   const {data, error} = await  this.supabase.signUp(this.email, this.password);
-if(data){
-  this.router.navigateByUrl('/auth/login');
+  this.id = data.user?.id ?? '';
+
+  if(data){
+  // console.log(data);
+ const profile : Profile = {
+   username: this.username,
+   email: this.email,
+   avatar_url: '',
+   website: ''
+ };
+  const {data, error} = await this.supabase.updateProfile(profile, this.id);
+  if(data){
+    alert('Account created successfully');
+    // this.router.navigateByUrl('/auth/login');
+  }
+  // this.router.navigateByUrl('/auth/login');
 }
 
   }

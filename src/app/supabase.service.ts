@@ -43,7 +43,7 @@ export class SupabaseService implements OnInit {
     return this.supabase.auth.signInWithOtp({ email })
   }
   async getAllUser() {
-    return await this.supabase.auth.admin.listUsers()
+    return await this.supabase.rpc('get_all_users');
   }
 
   profile(user: User) {
@@ -53,6 +53,10 @@ export class SupabaseService implements OnInit {
       .eq('id', user.id)
       .single()
   }
+  async getProfile(id: string) {
+  const { data, error } =  await this.supabase.rpc('get_user',{id: this.userId ?? id} );
+return {data,error};
+}
   async uploadFile(file: File) {
 
     return await this.supabase.storage.from(`pdf/${this.userId}`).upload(file.name, file, {
@@ -123,13 +127,14 @@ export class SupabaseService implements OnInit {
     return this.supabase.auth.signOut()
   }
 
-  updateProfile(profile: Profile) {
+  async updateProfile(profile: Profile,id:string) {
     const update = {
       ...profile,
       updated_at: new Date(),
     }
 
-    return this.supabase.from('profiles').upsert(update)
+    const {data,error} = await this.supabase.from('profiles').update(update).eq('id',id ??  this.userId ?? this.lss.userData.userId );
+    return {data,error};
   }
 
   downLoadImage(path: string) {
